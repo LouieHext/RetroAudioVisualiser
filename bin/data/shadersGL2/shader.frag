@@ -1,0 +1,143 @@
+#version 120
+
+
+uniform vec2 u_resolution;
+uniform float u_time;
+uniform vec2 u_mouse;
+uniform float u_scale;
+uniform float u_timeScale;
+
+
+
+
+
+//simple noise source 
+//https://weber.itn.liu.se/~stegu/jgt2011/supplement.pdf
+vec4 permute(vec4 x){
+    return mod( x*((x * 34.0)+1.0 ), 289.0);
+    }
+vec4 taylorInvSqrt(vec4 r){
+    return 1.79284291400159-0.85373472095314*r;
+}
+float snoise(vec3 v){
+    const vec2  C=vec2  (1.0/6.0,1.0/3.0);
+    const vec4 D=vec4 (0.0,0.5,1.0,2.0);
+    //Firstcorner
+    vec3 i=floor(v+dot(v,C.yyy));
+    vec3 x0=v-i+dot(i,C.xxx);
+    //Othercorners
+    vec3 g=step(x0.yzx,x0.xyz);
+    vec3 l=1.0-g;
+    vec3 i1=min(g.xyz,l.zxy);
+    vec3 i2=max(g.xyz,l.zxy);
+    //x0=x0-0.+0.0*C
+    vec3 x1=x0-i1+1.0*C.xxx;
+    vec3 x2=x0-i2+2.0*C.xxx;
+    vec3 x3=x0-1.+3.0*C.xxx;
+    //Permutations
+    i=mod(i,289.0);
+    vec4 p=permute(permute(permute(
+    i.z+vec4 (0.0,i1.z,i2.z,1.0))
+    +i.y+vec4 (0.0,i1.y,i2.y,1.0))
+    +i.x+vec4 (0.0,i1.x,i2.x,1.0));
+    //Gradientsfrom7x7pointsoverasquare,mappedontoanoctahedron
+    float n_=1.0/7.0;
+    vec3 ns=n_*D.wyz-D.xzx;
+    vec4 j=p-49.0*floor(p*ns.z*ns.z);//mod(p,7*7)
+    vec4 x_=floor(j*ns.z);
+    vec4 y_=floor(j-7.0*x_);//mod(j,7)
+    vec4 x=x_*ns.x+ns.yyyy;
+    vec4 y=y_*ns.x+ns.yyyy;
+    vec4 h=1.0-abs(x)-abs(y);
+    vec4 b0=vec4 (x.xy,y.xy);
+    vec4 b1=vec4 (x.zw,y.zw);
+    //vec4 s0=vec4 (lessThan(b0,0.0))*2.0-1.0;
+    //vec4 s1=vec4 (lessThan(b1,0.0))*2.0-1.0;
+    vec4 s0=floor(b0)*2.0+1.0;
+    vec4 s1=floor(b1)*2.0+1.0;
+    vec4 sh=-step(h,vec4 (0.0));
+    vec4 a0=b0.xzyw+s0.xzyw*sh.xxyy;
+    vec4 a1=b1.xzyw+s1.xzyw*sh.zzww;
+
+    vec3 p0=vec3 (a0.xy,h.x);
+    vec3 p1=vec3 (a0.zw,h.y);
+    vec3 p2=vec3 (a1.xy,h.z);
+    vec3 p3=vec3 (a1.zw,h.w);
+    //Normalisegradients
+    vec4 norm=taylorInvSqrt(vec4 (dot(p0,p0),dot(p1,p1),dot(p2,p2),
+    dot(p3,p3)));
+    p0*=norm.x;
+    p1*=norm.y;
+    p2*=norm.z;
+    p3*=norm.w;
+    //Mixfinalnoisevalue
+    vec4 m=max(0.6-vec4 (dot(x0,x0),dot(x1,x1),dot(x2,x2),dot(x3,x3)
+    ),0.0);
+    m=m*m;
+    return 42.0*dot(m*m,vec4 (dot(p0,x0),dot(p1,x1),
+    dot(p2,x2),dot(p3,x3)));
+}
+
+float snoise(vec3 v){
+
+ return sin(0.342+v.x)*cos(2.8323+v.y)*sin(v.z+3.5241);
+}
+
+float fbm(vec2 v,float scale){
+	float value = 0;
+
+	for(int i = 0; i <10 ; i++){
+         value+=(snoise(vec3( v*pow(2.0,float(i)) , scale*u_time ) ))*pow(2.0,(0.01+12.0*0.08)*float(-i));
+    }   
+	return value;
+}
+
+
+
+
+
+void main(){    
+    
+    float scale = 0.2;
+    float noiseScale=(2.0);
+    vec2 position =((noiseScale)) *(gl_FragCoord.xy/u_resolution+-0.5)+u_mouse*0.01;
+    // vec2 position =((1.0)) *(gl_FragCoord.xy/u_resolution+0.01*u_mouse);
+
+    float value =(snoise(vec3(position,scale*u_time)));
+    value=abs(1.0-value*value);
+
+    float base =  0.1*(snoise(vec3(position,0.5*u_time)));  
+//	value+=fbm(position,scale);
+    for(int i = 0; i <10 ; i++){
+         value+=(snoise(vec3(position*pow(2.0,float(i) ),scale*u_time) ))*pow(2.0,(0.01+12.0*0.08)*float(-i));
+    }      
+
+
+    value=abs(1.0-pow(value,1.5));
+    vec2 q= vec2(value,snoise(vec3(value+3.5,value +4.3,scale*u_time)));
+    value+=snoise(vec3(value+3.0*q.x,value+4.3*q.y,scale*u_time));
+    vec2 r= vec2(value,snoise(vec3(value+3.5,value +2.3,scale*u_time)));
+    value+=snoise(vec3(value+2.0*r.x,value+5.3*r.y,scale*u_time));
+    vec2 s= vec2(value,snoise(vec3(value+4.58,value +4.3,scale*u_time)));
+    value+=snoise(vec3(value+20.7*s.x,value+3.9*s.y,scale*u_time));
+   
+
+   
+
+    const vec4 white=vec4(0.7725, 0.2353,   0.2353, 1.0);
+    const vec4 a=vec4(0.8118, 0.6627, 0.251, 1.0);
+    const vec4 b=vec4(0.1098, 0.7686, 0.9333, 0.4);
+    const vec4 c=vec4(0.3176, 0.6118, 0.8863, 0.9);
+    const vec4 d=vec4(0.051, 0.2745, 0.6078, 1.0);
+
+    vec4 colour=mix(white,a,1.0-value*value);
+    colour=mix(colour,b,r.x-s.y);
+    colour=mix(colour,c,s.x);
+    colour=mix(colour,d,q.y);
+
+// 
+    colour=colour*colour;
+    // colour=(1.0-colour);
+    //vec4 colour=vec4(vec3(value),1.0)
+    gl_FragColor=vec4(colour);
+}
