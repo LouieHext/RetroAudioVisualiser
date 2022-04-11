@@ -16,18 +16,7 @@ compressed (butchers the video):
 
 https://vimeo.com/697729912
                       
-//based upon maxiFeature extraction code (Michael Zbyszyński)
-//domain warping from inigo Quilez:
 
-https://www.iquilezles.org/www/articles/warp/warp.htm
-
-//beat detction algorithm from:
-
-https://en.wikipedia.org/wiki/Beat_detection
-
-//dithering from :
-
-http://alex-charlton.com/posts/Dithering_on_the_GPU/
 
 //this code extracts audio features which are then fed into a custom shader
 //this shader uses dithering and domain warping to create a retro styled visual
@@ -48,3 +37,15 @@ http://alex-charlton.com/posts/Dithering_on_the_GPU/
 
 //these may need to be adjusted per music genre/song but mainly need to be changed based on audio setup
 
+//based upon maxiFeature extraction code (Michael Zbyszyński)
+//domain warping from inigo Quilez:
+
+https://www.iquilezles.org/www/articles/warp/warp.htm
+
+//beat detction algorithm from:
+
+https://en.wikipedia.org/wiki/Beat_detection
+
+//dithering from :
+
+http://alex-charlton.com/posts/Dithering_on_the_GPU/
