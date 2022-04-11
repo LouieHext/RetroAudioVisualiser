@@ -1,5 +1,6 @@
 addons/
 obj/
+.vs/
 *.exe
 *.exp
 *.ilk
@@ -12,8 +13,8 @@ obj/
 *.aps
 *.ncb
 *.sln
-*.proj
 *.rc
+*.db
 
 
 
