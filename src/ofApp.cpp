@@ -35,6 +35,8 @@
 
 //these may need to be adjusted per music genre/song but mainly need to be changed based on audio setup
 
+//you may need to adjust the slider max for RMS and pitch depening on your audio set up also
+
 
 
 
@@ -253,6 +255,7 @@ void ofApp::audioOut(ofSoundBuffer& output) {
 
 
 void ofApp::audioIn(ofSoundBuffer& input) {
+	//code adapted from maxiFeatureExtraction
 
     //getting audio in and calculating RMS
 	float sum = 0;
@@ -486,29 +489,29 @@ void ofApp::drawInfo(float timeAverageShort) {
 	sprintf(avgString, "AVG: %.4f", timeAverageShort);
 	myfont.drawString(avgString, horizOffset, vertOffset + 200);
 
-	char minFreqStr[255]; // an array of chars
+	char minFreqStr[255]; 
 	sprintf(minFreqStr, "minFreq: %.0f", float(minFreq));
 	myfont.drawString(minFreqStr, horizOffset, vertOffset + 230);
 
-	char maxFreqStr[255]; // an array of chars
+	char maxFreqStr[255];
 	sprintf(maxFreqStr, "maxFreq: %.0f", float(maxFreq));
 	myfont.drawString(maxFreqStr, horizOffset, vertOffset + 260);
 
 
-	char peakString[255]; // an array of chars
+	char peakString[255]; 
 	sprintf(peakString, "Peak Freq: %.2f", peakFreq);
 	myfont.drawString(peakString, horizOffset, vertOffset + 290);
 
-	char centroidString[255]; // an array of chars
+	char centroidString[255];
 	sprintf(centroidString, "Spec Cent: %.2f", centroid);
 	myfont.drawString(centroidString, horizOffset, vertOffset + 320);
 
-	char pitchString[255]; // an array of chars
+	char pitchString[255]; 
 	sprintf(pitchString, "Pitch Cent: %.2f", pitchValue);
 	myfont.drawString(pitchString, horizOffset, vertOffset + 350);
 
 
-	char rmsString[255]; // an array of chars
+	char rmsString[255]; 
 	sprintf(rmsString, "RMS: %.2f", RMS);
 	myfont.drawString(rmsString, horizOffset, vertOffset + 380);
 }
@@ -533,13 +536,14 @@ void ofApp::drawShader() {
 	shader.setUniform1i("numFBM", numFBM);
 	shader.setUniform1f("powerFBM", powerFBM);
 
-	ofDrawRectangle(0, 0, x, y); //drawing
+	//drawing
+	ofDrawRectangle(0, 0, x, y); 
 
 	shader.end();
 
 	fbo.end();
 
-	fbo.draw(debugWidth, 0, ofGetWidth() - debugWidth, ofGetHeight());
+	fbo.draw(debugWidth, 0, ofGetWidth() - debugWidth, ofGetHeight()); //drawing to side of debug visuals
 }
 //----------------------------------------------------------------
 
@@ -643,7 +647,7 @@ void ofApp::palettesSetup() {
 	paletteEight.push_back(vec3(250, 250, 250));
 	paletteEight.push_back(vec3(40, 40, 40));
 
-
+	//adding to storage vector
 	palettes.push_back(paletteOne);
 	palettes.push_back(paletteTwo);
 	palettes.push_back(paletteThree);
@@ -653,7 +657,7 @@ void ofApp::palettesSetup() {
 	palettes.push_back(paletteSeven);
 	palettes.push_back(paletteEight);
 
-
+	//picking init colour
 	getPalette();
 }
 //----------------------------------------------------------------
