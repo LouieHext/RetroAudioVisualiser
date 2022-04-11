@@ -3,9 +3,11 @@
 
 //Live Music Retro Visualiser
 
-video documentation (uncompressed HEAVILY RECOMMENDED) - https://www.mediafire.com/file/92pn3fvf25msvnp/2022-04-10_18-00-22_Trim.mp4/file
-                     (live demo (cleaner than compressed)= - https://vimeo.com/698143588
-                      compressed (butchers the video) - https://vimeo.com/697729912
+video documentation 
+(uncompressed HEAVILY RECOMMENDED):
+https://www.mediafire.com/file/92pn3fvf25msvnp/2022-04-10_18-00-22_Trim.mp4/file
+live demo (cleaner than compressed) - https://vimeo.com/698143588
+compressed (butchers the video) - https://vimeo.com/697729912
                       
 //based upon maxiFeature extraction code (Michael Zbyszyński)
 //domain warping from inigo Quilez - https://www.iquilezles.org/www/articles/warp/warp.htm
