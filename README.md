@@ -5,14 +5,29 @@
 
 video documentation 
 (uncompressed HEAVILY RECOMMENDED):
+
 https://www.mediafire.com/file/92pn3fvf25msvnp/2022-04-10_18-00-22_Trim.mp4/file
-live demo (cleaner than compressed) - https://vimeo.com/698143588
-compressed (butchers the video) - https://vimeo.com/697729912
+
+live demo (cleaner than compressed):
+
+https://vimeo.com/698143588
+
+compressed (butchers the video):
+
+https://vimeo.com/697729912
                       
 //based upon maxiFeature extraction code (Michael Zbyszyński)
-//domain warping from inigo Quilez - https://www.iquilezles.org/www/articles/warp/warp.htm
-//beat detction algorithm from - https://en.wikipedia.org/wiki/Beat_detection
-//dithering from - http://alex-charlton.com/posts/Dithering_on_the_GPU/
+//domain warping from inigo Quilez:
+
+https://www.iquilezles.org/www/articles/warp/warp.htm
+
+//beat detction algorithm from:
+
+https://en.wikipedia.org/wiki/Beat_detection
+
+//dithering from :
+
+http://alex-charlton.com/posts/Dithering_on_the_GPU/
 
 //this code extracts audio features which are then fed into a custom shader
 //this shader uses dithering and domain warping to create a retro styled visual
