@@ -1,7 +1,6 @@
 # RetroAudioVisualiser
 created by Louie Hext - 03/2021
 
-Live Music Retro Visualiser
 
 Description
 ============
