@@ -3,8 +3,22 @@ created by Louie Hext - 03/2021
 
 Live Music Retro Visualiser
 
-video documentation 
-(uncompressed HEAVILY RECOMMENDED):
+Description
+============
+A real-time reactive audio visualiser. Using the maximillian library the program extracts beats, volume and pitch
+of the incoming audio. The beat detector works by defining a freq domain and compraring the average magnitude in that domain 
+against a previous time average, if it sufficiently large a beat is detected. The pitch is estimaed by taking the centroid
+of the ofxMaxmim octave analyiser, and the volume by calculatin the RMS of the audio signal.These values are then
+fed into a shader as parameters. The shader is generated purely by manipulating simplex noise. 
+Initially it is passed into a FBM function (combining higher freq with lower amps), before distroting this
+FBM noise with a series of domain warps which can be thought of as using the operation f(p) -> f(p + f(p + dp)).
+This create a series of distorted and undulating shapes, that pulse and shift with the music. This is then fed into a 
+dithering routine which gives the "retro-ness" to the visuals.
+
+video links
+===========
+
+video documentation (uncompressed HEAVILY RECOMMENDED):
 
 https://www.mediafire.com/file/92pn3fvf25msvnp/2022-04-10_18-00-22_Trim.mp4/file
 
@@ -15,27 +29,7 @@ https://vimeo.com/698143588
 compressed (butchers the video):
 
 https://vimeo.com/697729912
-                      
 
-
-this code extracts audio features which are then fed into a custom shader
-this shader uses dithering and domain warping to create a retro styled visual
-
-the "pitch centroid" of the sound is used to control the power of an FBM noise function in the shader
-higher pitches should correspond to smooth curves and lower more noisey ones
-
-the RMS value is used to control the scale of the visual. The louder the closer the visual will appear (as if youre "listening" to the visual)
-a beat detection causes the dithering colour pallette to change
-these values are averaged over time to give some more stability. 
-
-to use adjust the min and max freq to the relevant domain that you wish to search for beats in
-adjust the detection multiplier to define the threshold (the magnitude in the domain needs to be
-greater than the previous timeaverage multiplied by the detection multiplier to count as a beat).
-
-adjust the max RMS of the music such that you the visuals pulse in and out
-adjust the mac pitch such that the visuals change from smooth -> noisey as the pitch changes
-
-these may need to be adjusted per music genre/song but mainly need to be changed based on audio setup
 
 based upon maxiFeature extraction code (Michael Zbyszyński)
 domain warping from inigo Quilez:
