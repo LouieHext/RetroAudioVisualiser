@@ -30,7 +30,7 @@ compressed (butchers the video):
 https://vimeo.com/697729912
 
 
-Sources links
+Reference links
 ===========
 based upon maxiFeature extraction code (Michael Zbyszyński)
 
