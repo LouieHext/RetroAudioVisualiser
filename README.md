@@ -30,7 +30,10 @@ compressed (butchers the video):
 https://vimeo.com/697729912
 
 
+Sources links
+===========
 based upon maxiFeature extraction code (Michael Zbyszyński)
+
 domain warping from inigo Quilez:
 
 https://www.iquilezles.org/www/articles/warp/warp.htm
