@@ -17,7 +17,7 @@ dithering routine which gives the "retro-ness" to the visuals.
 video links
 ===========
 
-video documentation (uncompressed HEAVILY RECOMMENDED):
+video documentation (uncompressed HEAVILY RECOMMENDED for visual clarity):
 
 https://www.mediafire.com/file/92pn3fvf25msvnp/2022-04-10_18-00-22_Trim.mp4/file
 
